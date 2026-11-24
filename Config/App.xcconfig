@@ -1,0 +1,10 @@
+// Signing for the Stop Doomscroll app.
+//
+// Free Apple IDs need a bundle ID nobody else has registered, so don't build with the
+// placeholder below. Put your own values in Config/Local.xcconfig (scripts/bootstrap.sh
+// creates it for you). That file is git-ignored.
+
+PRODUCT_BUNDLE_IDENTIFIER = com.example.stopdoomscroll
+DEVELOPMENT_TEAM =
+
+#include? "Local.xcconfig"
