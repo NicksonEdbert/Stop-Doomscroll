@@ -1,0 +1,8 @@
+// Copy to Config/Local.xcconfig and fill in. It's git-ignored.
+
+// Must be unique to you, e.g. com.yourname.stopdoomscroll
+PRODUCT_BUNDLE_IDENTIFIER = com.yourname.stopdoomscroll
+
+// Optional. Your 10-character team ID. If you leave it empty, pick your
+// "(Personal Team)" in Xcode under Signing & Capabilities instead.
+DEVELOPMENT_TEAM =
