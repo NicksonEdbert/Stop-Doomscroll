@@ -66,39 +66,55 @@ The app's **Today** tab has a **Finish setup** card with these same steps. They'
 
 In the setup guide, tap **Allow notifications**. Notifications tell you when a session ends, when the budget runs out, when the weekly step-down happens, and when the app needs renewing.
 
-### 6. Create the "opened" automation, once per app
+### 6. Make 6 shortcuts
 
-Do this for **Instagram**, then again for **TikTok**, then again for **YouTube**.
+Build the actions as ordinary shortcuts first. They save themselves, which is more reliable than building actions inside an automation. In the **Shortcuts** app, open **All Shortcuts** and tap **+**.
 
-1. Open the **Shortcuts** app and go to the **Automation** tab.
-2. Tap **+** (or **New Automation**), then choose **App**.
-3. Tap **Choose**, select **Instagram** and tap **Done**. Make sure **Is Opened** is ticked and **Is Closed** is not.
-4. Select **Run Immediately**, and turn **Notify When Run** off. Tap **Next**.
-5. Tap **New Blank Automation**.
-6. Tap **Add Action**, search for **Check Access**, and add it. Tap the **App** placeholder and choose **Instagram**.
-7. Search for **If** and add it. Its input should already show **Check Access**. Tap **Condition** and pick **is**, then set the value to **False**.
-8. Search for **Start Mindful Pause** and add it. Set **App** to **Instagram**. Drag it so it sits **between "If" and "Otherwise"**.
-9. Tap **Done**.
+1. **Instagram Gate**
+   1. Add **Check Access** and set **App** to **Instagram**.
+   2. Add **If**. It should read **If Check Access is No** (older iOS versions say *is False*). If an extra empty **Condition** row appears, remove it with **⊖**.
+   3. Add **Start Mindful Pause**, set **App** to **Instagram**, and drag it so it sits **between "If" and "Otherwise"**.
+   4. Tap the name at the top → **Rename** → `Instagram Gate`. Tap **‹** to save.
+2. **Instagram End**: a new shortcut with one action, **End Session**, with **App** set to **Instagram**.
+3. Press and hold each of them, tap **Duplicate**, and make **TikTok Gate**, **TikTok End**, **YouTube Gate** and **YouTube End**. In each copy, change **every** App field. If one is left behind, opening YouTube shows "Opening TikTok".
 
-The finished automation looks like this:
+A finished gate looks like this:
 
 ```
-Check Access to Instagram
-If Check Access is False
+Check access to Instagram
+If Check Access is No
     Start a mindful pause for Instagram
 Otherwise
 End If
 ```
 
-### 7. Create the "closed" automation, once per app
+Don't rename these six after step 7. The automations find them by name.
 
-This is how the app measures your minutes. Again, do it for all three apps.
+### 7. Make 6 automations
 
-1. In the **Automation** tab, tap **+** → **App** → choose **Instagram**.
-2. Tick **Is Closed** and untick **Is Opened**. Select **Run Immediately** and turn **Notify When Run** off. Tap **Next**.
-3. Tap **New Blank Automation**, add **End Session**, set **App** to **Instagram**, and tap **Done**.
+In the **Automation** tab, tap **+** once for each row:
 
-When you're done you should have **6 automations**: Opened and Closed for each of the three apps.
+| When | Is | Run shortcut |
+|---|---|---|
+| Instagram | Opened | Instagram Gate |
+| Instagram | Closed | Instagram End |
+| TikTok | Opened | TikTok Gate |
+| TikTok | Closed | TikTok End |
+| YouTube | Opened | YouTube Gate |
+| YouTube | Closed | YouTube End |
+
+What **+** does depends on your iOS version:
+
+- **Newer iOS** asks *"What do you want your shortcut to do?"*. Type the row as a sentence, for example:
+
+  ```
+  When Instagram is opened, run my shortcut "Instagram Gate" immediately
+  ```
+
+  Check that the result shows the right app, **Opened** or **Closed**, and the right shortcut. Then tap **‹** to save.
+- **Older iOS** shows a list of triggers. Choose **App** → **Choose** → **Instagram**, tick only **Is Opened**, select **Run Immediately**, turn **Notify When Run** off, and tap **Next**. Then pick **Instagram Gate** from the list instead of New Blank Automation.
+
+Either way, each automation must run immediately, without asking. On newer iOS the automations also appear in All Shortcuts (for example "Run Shortcut When Instagram Opens"). That's normal, and you can leave them there.
 
 ### 8. Set the Screen Time backstop (strongly recommended)
 
@@ -143,8 +159,14 @@ If you forget, the app won't open, and the automations stop until you renew. The
 **Instagram opens with no pause.**
 Check that the automation says **Run Immediately** and that its **App** fields are set. Open Stop Doomscroll once, so iOS knows its actions exist. Also check the app hasn't expired (see "Every 7 days" above).
 
+**The pause shows the wrong app (for example "Opening TikTok" when you opened YouTube).**
+That gate shortcut was copied from another one, and one of its App fields still has the old app. Open it in All Shortcuts and set **both** actions to the right app. Check the matching **End** shortcut too.
+
+**Tapping ‹ doesn't save my automation.**
+Build the actions as a normal shortcut in All Shortcuts first (step 6), then make an automation that just runs it (step 7).
+
 **The pause keeps coming back right after I pick a time.**
-The **If** step is probably set to *is True*, or **Start Mindful Pause** sits outside the If block. Compare with the example in step 6.
+The **If** step is probably set to *is Yes* / *is True*, or **Start Mindful Pause** sits outside the If block. Compare with the example in step 6.
 
 **Shortcuts says it can't find "Check Access".**
 Open Stop Doomscroll once, then search again. If that doesn't help, delete and re-add the action.

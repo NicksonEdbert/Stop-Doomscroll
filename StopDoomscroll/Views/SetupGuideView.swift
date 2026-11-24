@@ -32,27 +32,26 @@ struct SetupGuideView: View {
                     }
                 }
 
-                GuideStep(number: 2, title: "Add the \"opened\" automation (once per app)") {
-                    Text("Do this for **Instagram**, then repeat it for **TikTok** and **YouTube**.")
+                GuideStep(number: 2, title: "Make 6 shortcuts") {
+                    Text("In the **Shortcuts** app, open **All Shortcuts** and tap **+** for each one. They save on their own when you tap **‹**.")
                     NumberedLines(lines: [
-                        "Open the **Shortcuts** app and go to the **Automation** tab.",
-                        "Tap **+** (or **New Automation**) and choose **App**.",
-                        "Tap **Choose**, pick **Instagram**, tap **Done**. Tick **Is Opened** and untick **Is Closed**.",
-                        "Choose **Run Immediately** and turn **Notify When Run** off. Tap **Next**.",
-                        "Tap **New Blank Automation**.",
-                        "Add the **Check Access** action (search \"Check Access\") and set **App** to **Instagram**.",
-                        "Add the **If** action. Its input should already be **Check Access**. Set the condition to **is False**.",
-                        "Add **Start Mindful Pause**, set **App** to **Instagram**, and drag it so it sits between **If** and **Otherwise**.",
-                        "Tap **Done**.",
+                        "**Instagram Gate**: add **Check Access** (App: Instagram). Add **If** and make it read **If Check Access is No** (older iOS: **is False**). Add **Start Mindful Pause** (App: Instagram) and drag it between **If** and **Otherwise**.",
+                        "**Instagram End**: add **End Session** (App: Instagram).",
+                        "Press and hold each one, tap **Duplicate**, and make **TikTok Gate**, **TikTok End**, **YouTube Gate** and **YouTube End**. Change **every** App field in each copy.",
                     ])
+                    Text("Rename a shortcut by tapping its name at the top. Don't rename them after step 3, because the automations find them by name.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
                 }
 
-                GuideStep(number: 3, title: "Add the \"closed\" automation (once per app)") {
-                    Text("This is how the app measures your minutes. Again for all three apps.")
+                GuideStep(number: 3, title: "Make 6 automations") {
+                    Text("In the **Automation** tab, tap **+** once for each line:")
+                    Text("Instagram **opened** → Instagram Gate\nInstagram **closed** → Instagram End\nTikTok **opened** → TikTok Gate\nTikTok **closed** → TikTok End\nYouTube **opened** → YouTube Gate\nYouTube **closed** → YouTube End")
+                        .font(.subheadline)
                     NumberedLines(lines: [
-                        "In **Automation**, tap **+** → **App** → choose **Instagram**.",
-                        "Tick **Is Closed** and untick **Is Opened**. **Run Immediately**, **Notify When Run** off. **Next**.",
-                        "**New Blank Automation** → add **End Session**, set **App** to **Instagram**. **Done**.",
+                        "If iOS asks **What do you want your shortcut to do?**, type for example: `When Instagram is opened, run my shortcut \"Instagram Gate\" immediately`",
+                        "If you get a list of triggers instead, choose **App** → **Instagram** → tick only **Is Opened** → **Run Immediately** → **Next**, then pick **Instagram Gate**.",
+                        "Either way, check that it runs immediately, without asking.",
                     ])
                 }
 
@@ -74,7 +73,7 @@ struct SetupGuideView: View {
                         "Switch away and back. No pause while the 5 min last.",
                         "Close Instagram, come back here: **Today** should show the minutes.",
                     ])
-                    Text("If Instagram opens with no pause, check the automation is set to **Run Immediately** and that you've opened this app at least once since installing it.")
+                    Text("No pause? Check that the automation runs immediately, and that you've opened this app at least once since installing it. Pause names the wrong app? A copied shortcut still has the old app in one of its App fields.")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
