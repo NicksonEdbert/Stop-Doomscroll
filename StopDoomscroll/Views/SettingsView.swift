@@ -8,6 +8,10 @@ struct SettingsView: View {
     @State private var fixedMinutes = 30
     @State private var resultMessage: String?
     @State private var notificationsOn = false
+    #if DEBUG
+    @State private var confirmingTestBudget = false
+    @State private var confirmingErase = false
+    #endif
 
     var body: some View {
         NavigationStack {
@@ -57,12 +61,29 @@ struct SettingsView: View {
                 #if DEBUG
                 Section {
                     Button("Set budget to 1 min (applies now)") {
-                        model.requestBudget(.fixed(minutes: 1))
-                        resultMessage = "Today's budget is now 1 min. Use Instagram for a minute, close it, and the next open should show the block screen."
+                        confirmingTestBudget = true
                     }
+                    .alert("Set the budget to 1 minute?", isPresented: $confirmingTestBudget) {
+                        Button("Set to 1 min", role: .destructive) {
+                            model.requestBudget(.fixed(minutes: 1))
+                            loadCurrentMode()
+                        }
+                        Button("Cancel", role: .cancel) {}
+                    } message: {
+                        Text("This is only for testing the block screen. It applies right away and stays at 1 min a day until you change it. Raising it again only takes effect tomorrow, so Instagram, TikTok and YouTube stay blocked for the rest of today.")
+                    }
+
                     Button("Erase all data", role: .destructive) {
-                        model.eraseAllData()
-                        loadCurrentMode()
+                        confirmingErase = true
+                    }
+                    .alert("Erase all data?", isPresented: $confirmingErase) {
+                        Button("Erase", role: .destructive) {
+                            model.eraseAllData()
+                            loadCurrentMode()
+                        }
+                        Button("Cancel", role: .cancel) {}
+                    } message: {
+                        Text("This deletes your minutes, pauses and streak, and restarts the plan at 90 min a day from today. Your shortcuts and automations aren't affected.")
                     }
                 } header: {
                     Text("Testing")
